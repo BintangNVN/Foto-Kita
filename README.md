@@ -1,52 +1,171 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# FotoKita - Photo Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern Laravel 12 application for photo management with user authentication, admin panel, and responsive design.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 🔐 User Authentication (Login/Register)
+- 📸 Photo Upload & Management
+- 👨‍💼 Admin Panel for User Management
+- 📊 Dashboard with Statistics
+- 🎨 Modern UI with Tailwind CSS
+- 📱 Responsive Design
+- 🌙 Dark Theme Support
+- 📋 Activity Logging
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend**: Laravel 12 (PHP 8+)
+- **Frontend**: Tailwind CSS, Bootstrap Icons
+- **Database**: SQLite (for Vercel deployment)
+- **Build Tool**: Vite
+- **Deployment**: Vercel
 
-## Learning Laravel
+## Local Development
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Prerequisites
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.1 or higher
+- Composer
+- Node.js & npm
+- MySQL or SQLite
 
-## Laravel Sponsors
+### Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd foto-kita
+```
 
-### Premium Partners
+2. Install PHP dependencies:
+```bash
+composer install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3. Install Node dependencies:
+```bash
+npm install
+```
+
+4. Copy environment file:
+```bash
+cp .env.example .env
+```
+
+5. Generate application key:
+```bash
+php artisan key:generate
+```
+
+6. Run migrations:
+```bash
+php artisan migrate
+```
+
+7. Seed the database:
+```bash
+php artisan db:seed
+```
+
+8. Build assets:
+```bash
+npm run build
+```
+
+9. Start the development server:
+```bash
+php artisan serve
+```
+
+10. Start Vite for asset compilation:
+```bash
+npm run dev
+```
+
+Visit `http://localhost:8000` to view the application.
+
+## Vercel Deployment
+
+### Prerequisites
+
+- Vercel account
+- GitHub repository
+
+### Deployment Steps
+
+1. **Push to GitHub**:
+   - Create a new repository on GitHub
+   - Push your code to the repository
+
+2. **Connect to Vercel**:
+   - Go to [vercel.com](https://vercel.com)
+   - Click "New Project"
+   - Import your GitHub repository
+
+3. **Configure Environment Variables**:
+   In Vercel dashboard, go to Project Settings > Environment Variables and add:
+
+   ```
+   APP_NAME=FotoKita
+   APP_ENV=production
+   APP_KEY=<generate-a-new-key>
+   APP_DEBUG=false
+   APP_URL=https://your-app-name.vercel.app
+   ```
+
+   To generate APP_KEY, run locally:
+   ```bash
+   php artisan key:generate --show
+   ```
+
+4. **Deploy**:
+   - Vercel will automatically detect the configuration and deploy
+   - The build process will run database migrations and seed data
+   - Your app will be available at `https://your-app-name.vercel.app`
+
+### Database Setup
+
+The application uses SQLite for Vercel deployment. The database is created automatically during the build process in `/tmp/database.sqlite`.
+
+## Project Structure
+
+```
+├── app/
+│   ├── Http/Controllers/     # Controllers
+│   └── Models/              # Eloquent Models
+├── database/
+│   ├── migrations/          # Database migrations
+│   └── seeders/            # Database seeders
+├── public/                  # Public assets
+├── resources/
+│   ├── css/                # Stylesheets
+│   ├── js/                 # JavaScript files
+│   └── views/              # Blade templates
+├── routes/
+│   └── web.php             # Web routes
+├── api/                    # Vercel serverless functions
+└── vercel.json             # Vercel configuration
+```
+
+## Default Credentials
+
+After seeding the database, you can login with:
+
+- **Admin User**: admin@fotokita.com / password
+- **Regular User**: user@fotokita.com / password
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-## Code of Conduct
+## License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
