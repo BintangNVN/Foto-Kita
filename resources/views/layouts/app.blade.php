@@ -143,6 +143,51 @@
         .topbar-title { font-size: 1.2rem; font-weight: 700; color: var(--text); }
         .topbar-clock { font-size: .9rem; color: var(--text-muted); font-weight: 500; }
 
+        .profile-topbar {
+            display: flex; align-items: center; gap: .75rem;
+            cursor: pointer; padding: .35rem .55rem; border-radius: 16px;
+            transition: background .25s ease, transform .25s ease;
+        }
+        .profile-topbar:hover { background: rgba(79, 70, 229, 0.12); transform: translateY(-1px); }
+        .profile-avatar {
+            width: 42px; height: 42px; border-radius: 50%; object-fit: cover;
+            border: 2px solid rgba(79, 70, 229, 0.9);
+        }
+        .profile-info {
+            display: flex; flex-direction: column; line-height: 1.1;
+            text-align: left; min-width: 0;
+        }
+        .profile-name {
+            font-size: .9rem; font-weight: 700; color: var(--text);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            max-width: 140px;
+        }
+        .profile-label {
+            font-size: .75rem; color: var(--text-muted); font-weight: 500;
+        }
+
+        .profile-dropdown {
+            background: rgba(15, 23, 42, 0.97);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+            min-width: 220px;
+        }
+        .profile-dropdown .dropdown-item {
+            color: var(--text); padding: 0.9rem 1.1rem;
+        }
+        .profile-dropdown .dropdown-item:hover,
+        .profile-dropdown .dropdown-item:focus {
+            background: rgba(79, 70, 229, 0.14);
+            color: var(--text);
+        }
+        .profile-dropdown .dropdown-divider {
+            border-top-color: rgba(255,255,255,0.1);
+        }
+        .profile-dropdown .dropdown-item i {
+            color: var(--primary);
+        }
+
         .content-area { padding: 2rem; max-width: 1400px; margin: 0 auto; }
 
         /* ── Cards ── */
@@ -531,7 +576,7 @@
     </div>
 
     @auth
-    <div class="sidebar-user">
+    {{-- <div class="sidebar-user">
         <div class="d-flex align-items-center gap-2">
             <div class="user-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
             <div class="user-info">
@@ -541,7 +586,7 @@
                 </span>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <nav class="sidebar-nav">
         @if(auth()->user()->isAdmin())
@@ -602,7 +647,45 @@
             </button>
             <span class="topbar-title">@yield('page-title', 'Dashboard')</span>
         </div>
-        <div class="topbar-clock" id="liveClock">--:--:--</div>
+        <div class="d-flex align-items-center gap-3">
+            <div class="topbar-clock" id="liveClock">--:--:--</div>
+            @auth
+                @if(!Auth::user()->isAdmin())
+                <div class="dropdown">
+                    <button class="btn btn-link p-0 text-decoration-none dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="profile-topbar">
+                            <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : 'https://via.placeholder.com/42x42/4f46e5/ffffff?text=' . substr(Auth::user()->name, 0, 1) }}" alt="Profile" class="profile-avatar">
+                            <div class="profile-info">
+                                <span class="profile-name">{{ Auth::user()->name }}</span>
+                                
+                            </div>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end profile-dropdown" aria-labelledby="profileDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                <i class="bi bi-person-gear me-2"></i>
+                                Ubah Profil
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('dashboard') }}">
+                                <i class="bi bi-house-door me-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-left me-2"></i>Keluar</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                @endif
+            @endauth
+        </div>
     </div>
 
     {{-- Alerts --}}

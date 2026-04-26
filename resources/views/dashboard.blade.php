@@ -67,9 +67,48 @@
     </div>
 </div>
 
+<div class="news-ticker-wrapper mb-4">
+    <div class="news-ticker">
+        <div class="news-ticker-track">
+            <div class="news-ticker-item">
+                <i class="bi bi-lightbulb-fill news-ticker-icon"></i>
+                <span>“Jangan kejar orang yang tidak menghargaimu, kejar versi terbaik dari dirimu.” -Najwa Shihab</span>
+            </div>
+            <div class="news-ticker-item">
+                <i class="bi bi-camera-reels news-ticker-icon"></i>
+                <span>“Dalam coding dan kehidupan, error bukan akhir—itu petunjuk untuk jadi lebih baik.” -Steve Jobs</span>
+            </div>
+            <div class="news-ticker-item">
+                <i class="bi bi-heart-fill news-ticker-icon"></i>
+                <span>“Kesuksesan bukan tentang seberapa cepat kamu sampai, tapi seberapa kuat kamu bertahan.” -B.J. Habibie</span>
+            </div>
+            <div class="news-ticker-item">
+                <i class="bi bi-star-fill news-ticker-icon"></i>
+                <span>“Tidak ada yang mustahil selama kamu mau berusaha dan berdoa.” -Ir. Soekarno</span>
+            </div>
+            <div class="news-ticker-item">
+                <i class="bi bi-lightbulb-fill news-ticker-icon"></i>
+                <span>“Jangan takut gagal, takutlah jika kamu tidak pernah mencoba.” -Roy T. Bennett</span>
+            </div>
+            <div class="news-ticker-item">
+                <i class="bi bi-camera-reels news-ticker-icon"></i>
+                <span>Jangan takut mencoba sudut dan cahaya baru; kreativitas sering dimulai dari keberanian bereksperimen.</span>
+            </div>
+            <div class="news-ticker-item">
+                <i class="bi bi-heart-fill news-ticker-icon"></i>
+                <span>Foto terbaik bukan soal alat, melainkan bagaimana kamu melihat dunia di depan lensa.</span>
+            </div>
+            <div class="news-ticker-item">
+                <i class="bi bi-star-fill news-ticker-icon"></i>
+                <span>Teruslah melangkah, belajar, dan memotret; setiap frame adalah langkah kecil menuju gaya fotografi yang unik.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row g-4">
     {{-- ── Recent Photos ── --}}
-    <div class="col-lg-7">
+    <div class="col-12">
         <div class="card-dark">
             <div class="card-header d-flex align-items-center justify-content-between">
                 <span><i class="bi bi-images me-2" style="color:var(--primary)"></i>Foto Terbaru</span>
@@ -104,42 +143,55 @@
             </div>
         </div>
     </div>
-
-    {{-- ── News Feed ── --}}
-    <div class="col-lg-5">
-        <div class="card-dark h-100">
-            <div class="card-header">
-                <i class="bi bi-newspaper me-2" style="color:var(--secondary)"></i>Berita Fotografi
-            </div>
-            <div class="card-body" style="padding:1rem;">
-                @foreach($news as $item)
-                <div style="padding:.9rem; border-radius:12px; margin-bottom:.6rem;
-                            background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05);
-                            transition:background .2s; cursor:default;"
-                     onmouseenter="this.style.background='rgba(108,99,255,.08)'"
-                     onmouseleave="this.style.background='rgba(255,255,255,.03)'">
-                    <div style="display:flex; align-items:flex-start; gap:.75rem;">
-                        <div style="font-size:1.4rem; flex-shrink:0; line-height:1;">{!! $item['icon'] !!}</div>
-                        <div>
-                            <div style="font-size:.85rem; font-weight:700; margin-bottom:.2rem; line-height:1.3;">
-                                {{ $item['title'] }}
-                            </div>
-                            <div style="font-size:.76rem; color:var(--text-muted); line-height:1.5; margin-bottom:.3rem;">
-                                {{ $item['summary'] }}
-                            </div>
-                            <div style="font-size:.7rem; color:var(--primary); font-weight:600;">
-                                <i class="bi bi-calendar3"></i> {{ $item['date'] }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
 </div>
 
 @endsection
+
+@push('styles')
+<style>
+    .news-ticker {
+        overflow: hidden;
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,.08);
+        background: rgba(255,255,255,.04);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+    }
+    .news-ticker-track {
+        display: inline-flex;
+        gap: 3rem;
+        animation: scroll-news 52s linear infinite;
+    }
+    .news-ticker:hover .news-ticker-track {
+        animation-play-state: paused;
+    }
+    .news-ticker-item {
+        display: inline-flex;
+        align-items: center;
+        gap: .75rem;
+        white-space: nowrap;
+        min-width: max-content;
+        color: var(--text);
+        font-size: .95rem;
+        font-weight: 500;
+    }
+    .news-ticker-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        font-size: 1rem;
+        color: var(--secondary);
+    }
+    .news-ticker-item span {
+        color: var(--text-muted);
+    }
+    @keyframes scroll-news {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+</style>
+@endpush
 
 @push('scripts')
 <script>
